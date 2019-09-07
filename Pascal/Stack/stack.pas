@@ -1,0 +1,184 @@
+PROGRAM LATIHAN_STACK;
+USES WINCRT;
+
+CONST MAXS=4;
+TYPE
+
+STMIK=RECORD
+NPM:STRING[12];
+NAMA:STRING[20];
+NILAI:INTEGER;
+ 
+END;
+
+STACK=RECORD
+TOP:INTEGER;
+DATA:ARRAY[1..MAXS] OF STMIK;
+
+END;
+
+PROCEDURE INIS (VAR S : STACK);
+
+BEGIN
+
+S.TOP:=0;
+
+END;
+
+FUNCTION ISEMPTY(VAR S : STACK):BOOLEAN;
+VAR
+
+HASIL:BOOLEAN;
+
+BEGIN
+
+HASIL := FALSE;
+
+IF S.TOP = 0 THEN
+BEGIN
+
+HASIL := TRUE;
+
+END;
+
+ISEMPTY:=HASIL;
+END;
+
+FUNCTION ISFULL(VAR S:STACK):BOOLEAN;
+VAR
+HASIL:BOOLEAN;
+
+BEGIN
+
+HASIL := FALSE;
+IF S.TOP = MAXS THEN
+BEGIN
+
+HASIL:= TRUE;
+
+END;
+
+ISFULL:=HASIL;
+
+END;
+
+PROCEDURE PUSH(NPM:STRING; NAMA:STRING; NILAI:INTEGER; VAR S:STACK);
+BEGIN
+
+IF ISFULL(S)=TRUE THEN
+   BEGIN
+        WRITELN('STACK PENUH');
+   END
+
+ELSE
+    BEGIN
+         IF ISEMPTY(S)=TRUE THEN
+            BEGIN
+                 S.TOP:=1;
+                 S.DATA[1].NPM:=NPM;
+                 S.DATA[1].NAMA:=NAMA;
+                 S.DATA[1].NILAI:=NILAI;
+            END
+ELSE
+    BEGIN
+         S.TOP:=S.TOP+1;
+         S.DATA[1].NPM:=NPM;
+         S.DATA[1].NAMA:=NAMA;
+         S.DATA[1].NILAI:=NILAI;
+    END;
+END;
+END;
+
+PROCEDURE POP(VAR S:STACK);
+BEGIN
+     IF S.TOP <>0 THEN
+        BEGIN
+        S.TOP:=S.TOP-1;
+        END
+     ELSE
+     WRITELN('DATA HABIS');
+     END;
+
+PROCEDURE PRINTS(VAR S:STACK);
+VAR
+I:INTEGER;
+BEGIN
+     IF S.TOP <>0 THEN
+        BEGIN
+        FOR I:=S.TOP DOWNTO 1 DO
+            BEGIN
+            WRITELN('=====================');
+            WRITELN('ELEMEN KE ',I);
+            WRITELN('NPM   : ',S.DATA[I].NPM);
+            WRITELN('NAMA  : ',S.DATA[I].NAMA);
+            WRITELN('NILAI : ',S.DATA[I].NILAI:2);
+            END;
+            WRITELN('=====================');
+        END
+     ELSE
+         BEGIN
+         WRITELN('STACK KOSONG');
+         END;
+     END;
+
+VAR
+S:STACK;
+I,BANYAK:INTEGER;
+BEGIN
+CLRSCR;
+INIS(S);
+
+WRITE('BANYAK DATA : ');READLN(BANYAK);
+WRITELN;
+WRITELN;
+
+FOR I:=1 TO BANYAK DO
+BEGIN
+     WRITELN('ELEMEN KE ',I);
+     WRITE('NPM   : ');READLN(S.DATA[I].NPM);
+     WRITE('NAMA  : ');READLN(S.DATA[I].NAMA);
+     WRITE('NILAI : ');READLN(S.DATA[I].NILAI);
+
+     WRITELN; WRITELN;
+END;
+
+FOR I:=1 TO BANYAK DO
+BEGIN
+     PUSH(S.DATA[I].NPM, S.DATA[I].NAMA, S.DATA[I].NILAI, S);
+END;
+WRITELN('==========DI PUSH=============');
+PRINTS(S);
+WRITELN; WRITELN;
+WRITELN('==========DI POP=============');
+POP(S);
+
+PRINTS(S);
+WRITELN('=============================');
+WRITELN;
+WRITE;
+READLN;
+
+END.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
